@@ -25,7 +25,7 @@ public class WalletService {
         Optional<Wallet> anyWallet = repository.findByCpfOrEmail(wallet.cpf(), wallet.email());
 
         if(anyWallet.isPresent()) {
-            throw new WalletDataAlreadyExistsException("Cpf or Email already exists on  our database!");
+            throw new WalletDataAlreadyExistsException("Cpf or Email already exists on our database!");
         }
 
         return mapper.toResponseDTO(
