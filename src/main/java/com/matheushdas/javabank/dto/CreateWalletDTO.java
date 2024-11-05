@@ -1,4 +1,10 @@
 package com.matheushdas.javabank.dto;
 
-public record CreateWalletDTO(String cpf, String email, String name) {
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotBlank;
+import org.hibernate.validator.constraints.br.CPF;
+
+public record CreateWalletDTO(@CPF @NotBlank String cpf,
+                              @Email @NotBlank String email,
+                              @NotBlank String name) {
 }
