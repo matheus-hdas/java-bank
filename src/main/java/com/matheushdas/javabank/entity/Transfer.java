@@ -1,6 +1,5 @@
 package com.matheushdas.javabank.entity;
 
-import com.matheushdas.javabank.filter.IpFilter;
 import jakarta.persistence.*;
 
 import java.math.BigDecimal;
