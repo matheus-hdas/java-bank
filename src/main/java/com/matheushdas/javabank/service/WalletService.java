@@ -1,6 +1,7 @@
 package com.matheushdas.javabank.service;
 
 import com.matheushdas.javabank.entity.Wallet;
+import com.matheushdas.javabank.exception.DeleteWalletException;
 import com.matheushdas.javabank.exception.WalletDataAlreadyExistsException;
 import com.matheushdas.javabank.repository.WalletRepository;
 import com.matheushdas.javabank.dto.CreateWalletDTO;
@@ -8,7 +9,9 @@ import com.matheushdas.javabank.dto.WalletResponseDTO;
 import com.matheushdas.javabank.mapper.WalletMapper;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
 import java.util.Optional;
+import java.util.UUID;
 
 @Service
 public class WalletService {
@@ -31,5 +34,19 @@ public class WalletService {
         return mapper.toResponseDTO(
                 repository.save(
                         mapper.toCreateEntity(wallet)));
+    }
+
+    public boolean delete(UUID id) {
+        Optional<Wallet> wallet = repository.findById(id);
+
+        if(wallet.isPresent()) {
+            if(wallet.get().getBalance().compareTo(BigDecimal.ZERO) != 0) {
+                throw new DeleteWalletException("Account Balance is not $0.00");
+            }
+
+            repository.deleteById(id);
+            return true;
+        }
+        return false;
     }
 }

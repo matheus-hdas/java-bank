@@ -1,5 +1,6 @@
 package com.matheushdas.javabank.exception.handler;
 
+import com.matheushdas.javabank.exception.DeleteWalletException;
 import com.matheushdas.javabank.exception.JavaBankException;
 import com.matheushdas.javabank.exception.WalletDataAlreadyExistsException;
 import com.matheushdas.javabank.exception.dto.InvalidParamsDTO;
@@ -36,5 +37,10 @@ public class GlobalExceptionHandler {
         pb.setProperty("invalid-params", invalidParams);
 
         return pb;
+    }
+
+    @ExceptionHandler(DeleteWalletException.class)
+    public ProblemDetail handleDeleteWalletException(DeleteWalletException ex) {
+        return ex.toProblemDetail();
     }
 }
